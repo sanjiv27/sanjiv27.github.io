@@ -22,6 +22,8 @@ interface ResumeCardProps {
 }
 
 interface TimelineItemProps {
+  itemId: string;
+  section: "work" | "education";
   logoUrl: string;
   altText: string;
   title: string;
@@ -35,6 +37,8 @@ interface TimelineItemProps {
 }
 
 export const TimelineItem = ({
+  itemId,
+  section,
   logoUrl,
   altText,
   title,
@@ -62,6 +66,19 @@ export const TimelineItem = ({
         (description || bullets) && "cursor-pointer"
       )}
       onClick={handleClick}
+      role={description || bullets ? "button" : undefined}
+      tabIndex={description || bullets ? 0 : undefined}
+      aria-expanded={description || bullets ? isExpanded : undefined}
+      aria-label={description || bullets ? `${title} details` : undefined}
+      onKeyDown={(event) => {
+        if ((description || bullets) && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
+      data-track-event={description || bullets ? "homepage_click" : undefined}
+      data-track-section={section} data-track-element="details"
+      data-track-item={itemId} data-track-action={isExpanded ? "collapse" : "expand"}
     >
       {/* Logo */}
       <Avatar
@@ -148,7 +165,8 @@ export const TimelineItem = ({
 
   if (href && href !== "#" && !description && !bullets) {
     return (
-      <Link href={href} target="_blank" rel="noopener noreferrer">
+      <Link href={href} target="_blank" rel="noopener noreferrer"
+        data-track-event="homepage_click" data-track-section={section} data-track-element="institution" data-track-item={itemId} data-track-action="open">
         {content}
       </Link>
     );

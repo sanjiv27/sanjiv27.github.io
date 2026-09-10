@@ -12,6 +12,7 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 
 interface Props {
+  itemId: string;
   title: string;
   href?: string;
   description: string;
@@ -29,6 +30,7 @@ interface Props {
 }
 
 export function ProjectCard({
+  itemId,
   title,
   href,
   description,
@@ -49,6 +51,8 @@ export function ProjectCard({
     >
       <Link
         href={href || "#"}
+        aria-label={`Open ${title}`}
+        data-track-event="homepage_click" data-track-section="projects" data-track-element="preview" data-track-action="open" data-track-item={itemId}
         className="block cursor-pointer"
       >
         {video && (
@@ -102,7 +106,8 @@ export function ProjectCard({
         {links && links.length > 0 && (
           <div className="flex flex-row flex-wrap items-start gap-1">
             {links?.map((link, idx) => (
-              <Link href={link?.href} key={idx} target="_blank">
+              <Link href={link?.href} key={idx} target="_blank" rel="noopener noreferrer"
+                  data-track-event="homepage_click" data-track-section="projects" data-track-element={link.type.toLowerCase().replace(/[^a-z0-9]+/g, "_")} data-track-action="open" data-track-item={itemId}>
                 <Badge key={idx} className="flex gap-2 px-2 py-1 text-[10px]">
                   {link.icon}
                   {link.type}

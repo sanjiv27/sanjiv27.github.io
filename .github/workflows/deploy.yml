@@ -35,10 +35,15 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
+    - name: Fetch GitHub activity
+      run: node scripts/fetch-github-contributions.mjs
+      env:
+        GITHUB_CONTRIBUTIONS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN || github.token }}
+
     - name: Build
       run: npm run build
       env:
-        NEXT_PUBLIC_GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
       
     - name: Setup Pages
       uses: actions/configure-pages@v4

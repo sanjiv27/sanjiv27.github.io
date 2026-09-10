@@ -12,7 +12,7 @@ import {
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Trees } from "lucide-react";
+import { Trees, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FloatingForest } from "./floating-forest";
@@ -30,6 +30,8 @@ export default function Navbar() {
               <TooltipTrigger asChild>
                 <Link
                   href={item.href}
+                  aria-label={item.label}
+                  data-track-event="homepage_click" data-track-section="dock" data-track-element={item.label.toLowerCase()} data-track-action="navigate"
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" }),
                     "size-12"
@@ -44,6 +46,22 @@ export default function Navbar() {
             </Tooltip>
           </DockIcon>
         ))}
+        <DockIcon>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <a
+                href={DATA.resumeUrl}
+                target="_blank" rel="noopener noreferrer"
+                aria-label="View résumé (opens in a new tab)"
+                data-track-event="homepage_click" data-track-section="dock" data-track-element="resume" data-track-action="open"
+                className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "size-10 sm:size-12")}
+              >
+                <FileText aria-hidden="true" className="size-4" />
+              </a>
+            </TooltipTrigger>
+            <TooltipContent><p>Résumé</p></TooltipContent>
+          </Tooltip>
+        </DockIcon>
         <Separator orientation="vertical" className="h-full" />
         {Object.entries(DATA.contact.social)
           .filter(([_, social]) => social.navbar)
@@ -53,6 +71,9 @@ export default function Navbar() {
                 <TooltipTrigger asChild>
                   <Link
                     href={social.url}
+                    aria-label={name}
+                    data-track-event={name === "LinkedIn" || name === "email" ? "contact_click" : "homepage_click"}
+                    data-track-section="dock" data-track-element={name.toLowerCase()} data-track-action="open"
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "icon" }),
                       "size-12"
@@ -75,6 +96,8 @@ export default function Navbar() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsForestActive(!isForestActive)}
+                aria-label={isForestActive ? "Hide forest" : "Show forest"} aria-pressed={isForestActive}
+                data-track-event="homepage_click" data-track-section="dock" data-track-element="forest" data-track-action={isForestActive ? "hide" : "show"}
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
                   "size-12",

@@ -58,6 +58,7 @@ export const ContactOrbiting = ({ delay = 0 }: ContactOrbitingProps) => {
             Want to chat? Feel free to reach out via{" "}
             <Link
               href={DATA.contact.social.email.url}
+              data-track-event="contact_click" data-track-section="contact" data-track-element="email" data-track-action="open" data-track-item="text"
               className="text-blue-500 hover:underline"
             >
               email
@@ -65,6 +66,7 @@ export const ContactOrbiting = ({ delay = 0 }: ContactOrbitingProps) => {
             or{" "}
             <Link
               href={DATA.contact.social.LinkedIn.url}
+              data-track-event="contact_click" data-track-section="contact" data-track-element="linkedin" data-track-action="open" data-track-item="text"
               className="text-blue-500 hover:underline"
             >
               LinkedIn
@@ -96,6 +98,7 @@ export const ContactOrbiting = ({ delay = 0 }: ContactOrbitingProps) => {
             <div className="flex gap-4">
               <Link
                 href={DATA.contact.social.email.url}
+              data-track-event="contact_click" data-track-section="contact" data-track-element="email" data-track-action="open" data-track-item="icon"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-background border shadow-lg hover:scale-110 transition-transform duration-200"
                 title="Send Email"
               >
@@ -103,6 +106,7 @@ export const ContactOrbiting = ({ delay = 0 }: ContactOrbitingProps) => {
               </Link>
               <Link
                 href={DATA.contact.social.LinkedIn.url}
+              data-track-event="contact_click" data-track-section="contact" data-track-element="linkedin" data-track-action="open" data-track-item="icon"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-background border shadow-lg hover:scale-110 transition-transform duration-200"
@@ -112,6 +116,7 @@ export const ContactOrbiting = ({ delay = 0 }: ContactOrbitingProps) => {
               </Link>
               <Link
                 href={DATA.contact.social.GitHub.url}
+              data-track-event="homepage_click" data-track-section="contact" data-track-element="github" data-track-action="open" data-track-item="icon"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-12 h-12 rounded-full bg-background border shadow-lg hover:scale-110 transition-transform duration-200"

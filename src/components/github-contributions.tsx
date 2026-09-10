@@ -30,34 +30,8 @@ export const GitHubContributions = ({ username, delay = 0 }: GitHubContributions
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        // Using GitHub's GraphQL API to get contribution data
-        const query = `
-          query {
-            user(login: "${username}") {
-              contributionsCollection {
-                contributionCalendar {
-                  totalContributions
-                  weeks {
-                    contributionDays {
-                      date
-                      contributionCount
-                      color
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `;
-
-        const response = await fetch('https://api.github.com/graphql', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN || ''}`,
-          },
-          body: JSON.stringify({ query }),
-        });
+        // The deployment fetches public activity data; credentials never enter the browser.
+        const response = await fetch('/github-contributions.json');
 
         if (!response.ok) {
           // Fallback to a simple visualization if API fails
@@ -67,20 +41,7 @@ export const GitHubContributions = ({ username, delay = 0 }: GitHubContributions
         }
 
         const data = await response.json();
-        const weeks = data.data?.user?.contributionsCollection?.contributionCalendar?.weeks || [];
-        
-        const allContributions: ContributionDay[] = [];
-        weeks.forEach((week: any) => {
-          week.contributionDays.forEach((day: any) => {
-            allContributions.push({
-              date: day.date,
-              contributionCount: day.contributionCount,
-              color: day.color,
-            });
-          });
-        });
-
-        setContributions(allContributions);
+        setContributions(data.username === username && Array.isArray(data.days) ? data.days : []);
       } catch (error) {
         console.error('Error fetching GitHub contributions:', error);
         setContributions([]);

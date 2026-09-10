@@ -1,9 +1,10 @@
 import { Icons } from "@/components/icons";
-import { HomeIcon, NotebookIcon } from "lucide-react";
+import { HomeIcon, FlaskConical } from "lucide-react";
 
 export const DATA = {
   name: "Sanjiv Kumaran Mohanraj",
   initials: "SKM",
+  resumeUrl: "https://drive.google.com/file/d/1-meTHZpVVUmJj_80qamI8mwn4lzxcH2h/view?usp=sharing",
   url: "https://sanjiv27.github.io",
   location: "Amherst",
   locationLink: "https://www.google.com/maps/place/amherst",
@@ -15,7 +16,7 @@ export const DATA = {
 
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
-    { href: "/notes", icon: NotebookIcon, label: "Notes" },
+    { href: "/research/", icon: FlaskConical, label: "Research" },
   ],
   contact: {
     email: "smohanraj@umass.edu",
@@ -45,11 +46,12 @@ export const DATA = {
 
   technicalExperience: [
     {
+      id: "mathworks",
       company: "MathWorks",
       href: "https://www.mathworks.com/",
       badges: [],
       title: "Software Engineering Intern",
-      logoUrl: "mathworks.png",
+      logoUrl: "/mathworks.png",
       start: "May 2026",
       end: "August 2026",
       bullets: [
@@ -58,12 +60,13 @@ export const DATA = {
       ],
     },
     {
+      id: "bny-mellon",
       company: "BNY Mellon",
       href: "https://www.bny.com/",
       badges: [],
       location: "Chennai, India",
       title: "Associate",
-      logoUrl: "bnymellon.png",
+      logoUrl: "/bnymellon.png",
       start: "July 2023",
       end: "August 2025", // or "Month Year"
       bullets: [
@@ -74,12 +77,13 @@ export const DATA = {
       ],
     },
     {
+      id: "oracle",
       company: "Oracle",
       href: "https://www.oracle.com/",
       badges: [],
       location: "Chennai, India",
       title: "Summer Intern",
-      logoUrl: "oracle.png",
+      logoUrl: "/oracle.png",
       start: "June 2022",
       end: "July 2022", // or "Month Year"
       bullets: [
@@ -90,44 +94,38 @@ export const DATA = {
   ],
   education: [
     {
+      id: "umass-amherst",
       school: "University of Massachusetts - Amherst",
       href: "https://www.umass.edu/",
       degree: "Masters, Computer Science",
-      logoUrl: "umass.png",
+      logoUrl: "/umass.png",
       start: "2025",
       end: "2027",
     },
     {
+      id: "nit-trichy",
       school: "National Institute of Technology - Tiruchirappalli",
       href: "https://www.nitt.edu/",
       degree: "Bachelor of Technology, Computer Science and Engineering",
-      logoUrl: "nitt.png",
+      logoUrl: "/nitt.png",
       start: "2019",
       end: "2023",
     },
   ],
   projects: [
     {
-      title: "UniTrade - Campus Marketplace Platform",
-      href: "https://github.com/sanjiv27/unitrade",
-      dates: "2024 - Present",
+      id: "imagination-reward-hacking",
+      title: "Imagination Reward Hacking",
+      href: "https://github.com/sanjiv27/dreamerv3",
+      dates: "2026",
       active: true,
       description:
-        "Built a campus-exclusive full-stack marketplace with secure JWT-based authentication and role-based access control (RBAC); enabled real-time auctions, messaging, and notifications via Socket.IO, AI-powered semantic search using Google Gemini, and scalable REST APIs with admin moderation to ensure platform safety and reliability.",
-      technologies: [
-        "Next.js",
-        "Node.js",
-        "Express",
-        "Prisma",
-        "PostgreSQL",
-        "Socket.IO",
-        "JWT",
-        "Google Gemini",
-      ],
+        "Studied reward misspecification in DreamerV3 on Crafter. Ran scalar and achievement-augmented experiments, comparing training reward with native reward and health to examine when higher scores mask weaker task performance.",
+      technologies: ["Python", "JAX", "DreamerV3", "Crafter", "Reinforcement Learning"],
       links: [
         {
           type: "Source",
-          href: "https://github.com/sanjiv27/unitrade",
+          href: "https://github.com/sanjiv27/dreamerv3",
           icon: <Icons.github className="size-3" />,
         },
       ],
@@ -135,9 +133,29 @@ export const DATA = {
       video: "",
     },
     {
+      id: "cachegen",
+      title: "CacheGen Verification",
+      href: "https://github.com/sanjiv27/cachegen",
+      dates: "2026",
+      active: true,
+      description:
+        "Evaluated KV cache compression for LLM serving. Reported 3.29× offline compression with negligible perplexity change; single-A100 vLLM experiments showed how reconstruction overhead can outweigh transfer savings.",
+      technologies: ["Python", "PyTorch", "vLLM", "Hugging Face", "Zstandard", "LLM Serving"],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/sanjiv27/cachegen",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      id: "asset-recommendation",
       title: "Asset Recommendation System",
       href: "https://github.com/sanjiv27/asset-recommendation-system",
-      dates: "2024",
+      dates: "2025",
       active: true,
       description:
         "Built a hybrid ML recommendation engine combining collaborative filtering (SVD), content-based, and demographic analysis. Implemented distributed microservices with FastAPI, Kafka, PostgreSQL achieving under 100ms latency for 1K+ users. Features real-time retraining, model versioning, and containerized deployment.",
@@ -162,9 +180,10 @@ export const DATA = {
       video: "",
     },
     {
+      id: "overtool",
       title: "OverTool - Slowdown Attacks on MCP-based LLM agents",
       href: "https://github.com/ChetanMadadi/MCP-Attacks-Overtool/",
-      dates: "2024",
+      dates: "2025",
       active: true,
       description:
         "Led a 3-member team to design and benchmark adversarial Slowdown attacks on a full-stack Python/FastMCP tool-using agent pipeline; crafted long-horizon decoy tool-call chains to stress test the request pipeline and context window, causing 3× higher response latency and 20% lower task completion.",
@@ -186,7 +205,39 @@ export const DATA = {
       image: "",
       video: "",
     },
+  ],
+  // Retained for future use; only projects above appear in Latest Work.
+  archivedProjects: [
     {
+      id: "unitrade",
+      title: "UniTrade - Campus Marketplace Platform",
+      href: "https://github.com/SuyashManiyar/UniTrade-Campus-Marketplace",
+      dates: "2025",
+      active: true,
+      description:
+        "Built a campus-exclusive full-stack marketplace with secure JWT-based authentication and role-based access control (RBAC); enabled real-time auctions, messaging, and notifications via Socket.IO, AI-powered semantic search using Google Gemini, and scalable REST APIs with admin moderation to ensure platform safety and reliability.",
+      technologies: [
+        "Next.js",
+        "Node.js",
+        "Express",
+        "Prisma",
+        "PostgreSQL",
+        "Socket.IO",
+        "JWT",
+        "Google Gemini",
+      ],
+      links: [
+        {
+          type: "Source",
+          href: "https://github.com/SuyashManiyar/UniTrade-Campus-Marketplace",
+          icon: <Icons.github className="size-3" />,
+        },
+      ],
+      image: "",
+      video: "",
+    },
+    {
+      id: "electoral-family-tree",
       title: "Electoral Roll Family Tree System",
       href: "https://github.com/sanjiv27/electoral-family-tree",
       dates: "2023 - 2024",

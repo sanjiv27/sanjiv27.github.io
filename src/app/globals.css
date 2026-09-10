@@ -187,13 +187,8 @@ code[data-line-numbers-max-digits="3"] > [data-line]::before {
   width: 3rem;
 }
 
-@theme inline {
-  @keyframes orbit {
-  0% {
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
-        }
-  100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
-        }
-    }
+/* Orbit keyframes are defined in tailwind.config.ts (Tailwind 3). */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

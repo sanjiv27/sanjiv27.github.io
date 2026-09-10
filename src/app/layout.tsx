@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { Analytics } from "@/components/analytics";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -69,6 +70,7 @@ export default function RootLayout({
             {children}
             </div>
             <Navbar />
+            <Analytics />
           </TooltipProvider>
         </ThemeProvider>
       </body>

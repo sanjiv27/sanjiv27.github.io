@@ -192,6 +192,8 @@ export const TechStack = ({ delay = 0 }: TechStackProps) => {
               variant="outline"
               size="icon"
               onClick={() => setShowAll(true)}
+              aria-label="Show all technologies" aria-expanded={false}
+              data-track-event="homepage_click" data-track-section="tech-stack" data-track-element="technologies" data-track-action="expand"
               className="h-10 w-10"
               title="Show all technologies"
             >
@@ -261,6 +263,8 @@ export const TechStack = ({ delay = 0 }: TechStackProps) => {
               variant="outline"
               size="icon"
               onClick={() => setShowAll(false)}
+              aria-label="Back to scrolling view" aria-expanded={true}
+              data-track-event="homepage_click" data-track-section="tech-stack" data-track-element="technologies" data-track-action="collapse"
               className="h-10 w-10"
               title="Back to scrolling view"
             >

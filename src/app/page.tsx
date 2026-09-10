@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const GitHubContributions = dynamic(() => import("@/components/github-contributions").then(mod => mod.GitHubContributions), { ssr: false });
@@ -13,6 +13,7 @@ const ContactOrbiting = dynamic(() => import("@/components/contact-orbiting").th
 const BlurFade = dynamic(() => import("@/components/magicui/blur-fade").then(mod => mod.default), { ssr: false });
 const BlurFadeText = dynamic(() => import("@/components/magicui/blur-fade-text").then(mod => mod.default), { ssr: false });
 const ProjectCard = dynamic(() => import("@/components/project-card").then(mod => mod.ProjectCard), { ssr: false });
+import { trackEvent } from "@/lib/analytics";
 import { DATA } from "@/data/resume";
 
 const BLUR_FADE_DELAY = 0.04;
@@ -21,15 +22,34 @@ export default function Page() {
   const [aboutExpanded, setAboutExpanded] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
 
+  const profileButton = useRef<HTMLButtonElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const closeProfile = (action: string) => {
+    trackEvent("homepage_click", { section: "hero", element_id: "profile_photo", action });
+    setShowProfileModal(false);
+    profileButton.current?.focus();
+  };
+  useEffect(() => {
+    if (!showProfileModal) return;
+    closeButton.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeProfile("close_escape");
+      if (event.key === "Tab") { event.preventDefault(); closeButton.current?.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [showProfileModal]);
+
   return (
     <main className="flex flex-col min-h-[100dvh] py-section-md">
-      <section id="hero" className="mb-section-lg">
+      <section id="hero" className="mb-8 md:mb-10">
         <div className="w-full space-y-content-lg px-4 md:px-0">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 justify-between items-center md:items-start">
             {/* Avatar - shows first on mobile, right on desktop */}
             <BlurFade delay={BLUR_FADE_DELAY * 2} className="md:order-2">
-              <div 
-                className="relative w-44 h-44 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-border shadow-xl cursor-pointer group"
+              <button type="button" ref={profileButton} aria-label="Open profile photo" aria-haspopup="dialog"
+                data-track-event="homepage_click" data-track-section="hero" data-track-element="profile_photo" data-track-action="open"
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring relative w-44 h-44 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-border shadow-xl cursor-pointer group"
                 onClick={() => setShowProfileModal(true)}
               >
                 <img 
@@ -38,7 +58,7 @@ export default function Page() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   style={{ objectPosition: 'center' }}
                 />
-              </div>
+              </button>
             </BlurFade>
             
             {/* Text content - shows second on mobile, left on desktop */}
@@ -53,7 +73,8 @@ export default function Page() {
                 <p className="text-sm text-muted-foreground md:text-base">
                   Pronounced /sun-jeev/, currently in{" "}
                   <a 
-                    href="https://en.wikipedia.org/wiki/Amherst,_Massachusetts" 
+                    href="https://en.wikipedia.org/wiki/Amherst,_Massachusetts"
+                    data-track-event="homepage_click" data-track-section="hero" data-track-element="location" data-track-action="open"
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="font-medium text-primary hover:text-primary/80 underline decoration-primary/40 underline-offset-2 hover:decoration-primary/60 transition-all duration-200"
@@ -68,6 +89,18 @@ export default function Page() {
                   {DATA.description}
                 </p>
               </BlurFade>
+              <BlurFade delay={BLUR_FADE_DELAY * 6} className="flex">
+                <a
+                  href={DATA.resumeUrl}
+                  target="_blank" rel="noopener noreferrer"
+                  aria-label="View résumé (opens in a new tab)"
+                  data-track-event="homepage_click" data-track-section="hero" data-track-element="resume" data-track-action="open"
+                  className="group inline-flex min-h-11 items-center gap-1 text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors duration-200 hover:decoration-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                >
+                  Résumé
+                  <ArrowUpRight aria-hidden="true" className="size-3 text-muted-foreground transition-colors group-hover:text-foreground" />
+                </a>
+              </BlurFade>
             </div>
           </div>
         </div>
@@ -80,6 +113,8 @@ export default function Page() {
               <h2 className="text-xl font-bold">About</h2>
               <button
                 onClick={() => setAboutExpanded(!aboutExpanded)}
+                aria-expanded={aboutExpanded}
+                data-track-event="homepage_click" data-track-section="about" data-track-element="read_more" data-track-action={aboutExpanded ? "collapse" : "expand"}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground bg-muted/50 hover:bg-muted rounded-full transition-all duration-200"
               >
                 {aboutExpanded ? "Hide" : "Read more"}
@@ -120,6 +155,8 @@ export default function Page() {
           {DATA.technicalExperience.map((work, id) => (
               <BlurFade key={work.company} delay={BLUR_FADE_DELAY * 18 + id * 0.02}>
                 <TimelineItem
+                itemId={work.id}
+                section="work"
                 logoUrl={work.logoUrl}
                 altText={work.company}
                 title={work.company}
@@ -145,6 +182,8 @@ export default function Page() {
           {DATA.education.map((education, id) => (
               <BlurFade key={education.school} delay={BLUR_FADE_DELAY * 20 + id * 0.02}>
                 <TimelineItem
+                itemId={education.id}
+                section="education"
                 logoUrl={education.logoUrl}
                 altText={education.school}
                 title={education.school}
@@ -188,6 +227,7 @@ export default function Page() {
                 delay={BLUR_FADE_DELAY * 23 + id * 0.05}
               >
                 <ProjectCard
+                  itemId={project.id}
                   href={project.href}
                   title={project.title}
                   description={project.description}
@@ -217,16 +257,19 @@ export default function Page() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            onClick={() => setShowProfileModal(false)}
+            onClick={(event) => { if (event.target === event.currentTarget) closeProfile("close_backdrop"); }}
           >
             <motion.div
               initial={{ scale: 0.3, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.3, opacity: 0 }}
               transition={{ type: "spring", duration: 0.5 }}
+              role="dialog" aria-modal="true" aria-label="Profile photo"
               className="relative w-96 h-96 rounded-full overflow-hidden shadow-2xl border-4 border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
+              <button ref={closeButton} type="button" onClick={() => closeProfile("close_button")}
+                className="absolute top-6 left-1/2 -translate-x-1/2 z-10 rounded-full bg-background px-4 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring">Close</button>
               <img 
                 src={DATA.avatarUrl} 
                 alt={DATA.name}
