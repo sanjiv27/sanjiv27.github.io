@@ -58,6 +58,7 @@ export const RESEARCH: readonly ResearchEntry[] = [
     highlights: ["scalar and achievement-augmented experiments", "independent measures of task performance"],
     summary:
       "Investigated how a wood-collection reward bonus can inflate DreamerV3's training score without improving native Crafter behavior. Ran scalar and achievement-augmented experiments and analyzed reward and health traces as part of a comparison with multi-objective learning. The single-seed study highlights why optimized reward must be checked against independent measures of task performance.",
+    driveUrl: "https://drive.google.com/file/d/1xSVrbrWDYL2ZKZ0Eu27mKYHryIDRnn3B/view?usp=sharing",
     codeUrl: "https://github.com/sanjiv27/dreamerv3",
   },
   {
