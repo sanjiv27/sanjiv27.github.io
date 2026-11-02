@@ -1,1 +1,1 @@
-export const KOI_VERSION = "6377ebffdc6a";
+export const KOI_VERSION = "ee139c4adfbe";

@@ -29,6 +29,9 @@ def face_right(frame):
             (round(frame.width * scale), round(frame.height * scale)),
             Image.Resampling.NEAREST,
         )
+    frame = frame.resize(
+        (frame.width, round(frame.height * 1.14)), Image.Resampling.NEAREST
+    )
     alpha = frame.getchannel("A")
     head_ys = [
         y
@@ -99,7 +102,7 @@ def main():
     make_pose(artwork).save(STILL)
     VERSION.parent.mkdir(parents=True, exist_ok=True)
     VERSION.write_text(
-        f'export const KOI_VERSION = "{sha256(SOURCE.read_bytes()).hexdigest()[:12]}";\n'
+        f'export const KOI_VERSION = "{sha256(SHEET.read_bytes()).hexdigest()[:12]}";\n'
     )
     print(f"Wrote {OUTPUT} ({len(frames)} frames)")
 

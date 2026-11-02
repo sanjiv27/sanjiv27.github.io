@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { KOI_VERSION } from "@/generated/koi-version";
 
-const SIZE = 208;
+const SIZE = 240;
 const BODY_X = SIZE * 0.5;
 const BODY_Y = SIZE * 0.5;
-const FOLLOW_DISTANCE = 88;
+const FOLLOW_DISTANCE = 102;
 const ART_SIZE = 320;
 const FRAME_COUNT = 24;
 const SHEET_COLUMNS = 6;
@@ -107,8 +107,8 @@ export function FloatingKoi() {
     };
 
     const keepInView = () => {
-      bodyX = clamp(bodyX, 70, Math.max(70, window.innerWidth - 70));
-      bodyY = clamp(bodyY, 70, Math.max(70, window.innerHeight - 70));
+      bodyX = clamp(bodyX, 100, Math.max(100, window.innerWidth - 100));
+      bodyY = clamp(bodyY, 100, Math.max(100, window.innerHeight - 100));
       place();
     };
 
@@ -214,7 +214,7 @@ export function FloatingKoi() {
     <>
       <div
         ref={fish}
-        className="pointer-events-none fixed left-0 top-0 z-20 w-52 opacity-0"
+        className="pointer-events-none fixed left-0 top-0 z-20 w-60 opacity-0"
         style={{ transformOrigin: `${BODY_X}px ${BODY_Y}px` }}
       >
         <button
