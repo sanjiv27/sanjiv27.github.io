@@ -15,6 +15,7 @@ const BlurFadeText = dynamic(() => import("@/components/magicui/blur-fade-text")
 const ProjectCard = dynamic(() => import("@/components/project-card").then(mod => mod.ProjectCard), { ssr: false });
 import { trackEvent } from "@/lib/analytics";
 import { DATA } from "@/data/resume";
+import { FloatingKoi } from "@/components/floating-koi";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -280,6 +281,7 @@ export default function Page() {
           </motion.div>
         )}
       </AnimatePresence>
+      <FloatingKoi />
     </main>
   );
 }
